@@ -11,11 +11,11 @@ const CreateCategory = () => {
   const [name, setName] = useState('');
   const [visible, setVisible] = useState(false);
   const [updatedName, setUpdatedName] = useState('');
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState(null);
 
   //handle form
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const { data } = await axios.post(`${process.env.REACT_APP_API}api/v1/category/create-category`, { name });
       if (data?.success) {
@@ -100,14 +100,14 @@ const CreateCategory = () => {
 
   return (
     <Layout title={'Dashboard - Create Category'}>
-      <div className='container-fluid m-3 p-3' >
+      <div className='container-fluid m-3 p-3 dashboard' >
         <div className="row">
           <div className="col-md-3">
             <AdminMenu />
           </div>
           <div className="col-md-9">
             <h1>Manage Category</h1>
-            <div className='col-md-3 w-50'>
+            <div className='p-3 w-50'>
               <CategoryForm handleSubmit={handleSubmit} value={name} setValue={setName} />
             </div>
             <div className='w-75'>
@@ -135,10 +135,6 @@ const CreateCategory = () => {
             <Modal onCancel={() => setVisible(false)} footer={null} open={visible}>
               <CategoryForm value={updatedName} setValue={setUpdatedName} handleSubmit={handleUpdate} />
             </Modal>
-            <div>
-              <h1 /><h1>
-              </h1></div>
-
           </div>
         </div>
 
@@ -147,4 +143,4 @@ const CreateCategory = () => {
   )
 }
 
-export default CreateCategory
+export default CreateCategory;

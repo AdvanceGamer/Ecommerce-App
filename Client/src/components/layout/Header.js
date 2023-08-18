@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom'
 import SearchInput from '../Forms/SearchInput'
 import useCategory from "../../hooks/useCategory";
 import { useCart } from '../../context/Cart';
-import {Badge} from 'antd'
+import { Badge } from 'antd'
 const Header = () => {
-  const [cart]=useCart();
+  const [cart] = useCart();
   const categories = useCategory();
   const [auth, setAuth] = useAuth()
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const Header = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div className="container-fluid">
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
@@ -41,7 +41,7 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <Link to="/" className="navbar-brand" > 🛒 Ecommerce App</Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <SearchInput/>
+              <SearchInput />
               <li className="nav-item">
                 <NavLink to="/" className="nav-link" >Home</NavLink>
               </li>
@@ -73,7 +73,7 @@ const Header = () => {
               </li>
 
               {
-                !auth.user ? (<>
+                !auth?.user ? (<>
                   <li className="nav-item">
                     <NavLink to="/register" className="nav-link" >register</NavLink>
                   </li>
@@ -84,14 +84,14 @@ const Header = () => {
 
                   (<>
                     <li className="nav-item dropdown">
-                      <NavLink className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <NavLink className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style={{ border: "none" }}>
                         {auth?.user?.name}
                       </NavLink>
                       <ul className="dropdown-menu">
                         <li><NavLink to={`/dashboard/${auth?.user?.role === 1 ? 'admin' : 'user'}`} className="dropdown-item" >Dashboard</NavLink></li>
 
-                        <li className="dropdown-item">
-                          <NavLink onClick={handleLogout} className="nav-link" >logout</NavLink>
+                        <li >
+                          <NavLink onClick={handleLogout} className="dropdown-item" >logout</NavLink>
                         </li>
                       </ul>
                     </li>
@@ -99,12 +99,12 @@ const Header = () => {
 
                   </>)
               }
-               <li className="nav-item">
-                <Badge count={cart?.length} showZero>
-                  <NavLink to="/cart" className="nav-link">
+              <li className="nav-item">
+                <NavLink to="/cart" className="nav-link">
+                  <Badge count={cart?.length} showZero offset={[10, -5]}>
                     Cart
-                  </NavLink>
-                </Badge>
+                  </Badge>
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -115,4 +115,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default Header;

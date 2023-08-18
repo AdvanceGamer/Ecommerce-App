@@ -8,10 +8,6 @@ import { AuthProvider } from './context/Auth';
 import { SearchProvider } from './context/Search';
 import { CartProvider } from './context/Cart';
 import 'antd/dist/reset.css'
-// import '../src/styles/Homepage.css'
-// import '../src/styles/CartStyles.css'
-// import '../src/styles/CategoryProductStyles.css'
-// import '../src/styles/ProductDetailsStyles.css'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AuthProvider>

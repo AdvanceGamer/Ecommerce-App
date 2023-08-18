@@ -5,7 +5,8 @@ import { toast } from 'react-toastify';
 import axios from 'axios'
 import { Select } from 'antd'
 import { useNavigate } from "react-router-dom";
-const { Option } = Select
+const { Option } = Select;
+
 const CreateProduct = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
@@ -38,10 +39,10 @@ const CreateProduct = () => {
   }, []);
 
 
-// Create Product Function
+  // Create Product Function
 
-const handleCreate=async(e)=>{
-  e.preventDefault();
+  const handleCreate = async (e) => {
+    e.preventDefault();
     try {
       const productData = new FormData();
       productData.append("name", name);
@@ -51,7 +52,7 @@ const handleCreate=async(e)=>{
       productData.append("photo", photo);
       productData.append("category", category);
       const { data } = axios.post(
-      `${process.env.REACT_APP_API}api/v1/product/create-product`,
+        `${process.env.REACT_APP_API}api/v1/product/create-product`,
         productData
       );
       if (data?.success) {
@@ -65,13 +66,13 @@ const handleCreate=async(e)=>{
       toast.error("something went wrong");
     }
 
-}
+  }
 
 
 
   return (
     <Layout title={'Dashboard - Create Product'}>
-      <div className='container-fluid m-3 p-3' >
+      <div className='container-fluid m-3 p-3 dashboard' >
         <div className="row">
           <div className="col-md-3">
             <AdminMenu />
@@ -81,8 +82,8 @@ const handleCreate=async(e)=>{
               Create Product
             </h1>
             <div className='m-1 w-75'>
-              <Select  placeholder="Select a category" size='large'
-                showSearch className='form-select mb-3' onChange={(value) => { setCategory(value) }}
+              <Select placeholder="Select a category" size='large'
+                showSearch className='form-select mb-3' onChange={(value) => { setCategory(value); }}
               >
                 {categories?.map(c =>
                   <Option key={c._id} value={c._id}>
@@ -110,11 +111,11 @@ const handleCreate=async(e)=>{
                 )}
               </div>
               <div className='mb-3'>
-                    <input type='text'
-                    value={name}
-                    placeholder='write a name'
-                    className='form-control'
-                    onChange={(e)=>{setName(e.target.value) }}/>
+                <input type='text'
+                  value={name}
+                  placeholder='write a name'
+                  className='form-control'
+                  onChange={(e) => { setName(e.target.value) }} />
               </div>
               <div className="mb-3">
                 <textarea
@@ -174,4 +175,4 @@ const handleCreate=async(e)=>{
   )
 }
 
-export default CreateProduct
+export default CreateProduct;
