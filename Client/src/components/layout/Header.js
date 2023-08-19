@@ -39,15 +39,15 @@ const Header = () => {
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <Link to="/" className="navbar-brand" > 🛒 Ecommerce App</Link>
+            <Link to="/" className="navbar-brand" > 🛒 ClickMartio</Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <SearchInput />
               <li className="nav-item">
-                <NavLink to="/" className="nav-link" >Home</NavLink>
+                <NavLink to="/" className="nav-link homeButton" >Home</NavLink>
               </li>
               <li className="nav-item dropdown">
                 <Link
-                  className="nav-link dropdown-toggle"
+                  className="nav-link dropdown-toggle categoriesButton"
                   to={"/categories"}
                   data-bs-toggle="dropdown"
                 >
@@ -75,10 +75,10 @@ const Header = () => {
               {
                 !auth?.user ? (<>
                   <li className="nav-item">
-                    <NavLink to="/register" className="nav-link" >register</NavLink>
+                    <NavLink to="/register" className="nav-link registerButton" >register</NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/login" className="nav-link" >login</NavLink>
+                    <NavLink to="/login" className="nav-link loginButton">login</NavLink>
                   </li>
                 </>) :
 
@@ -100,8 +100,8 @@ const Header = () => {
                   </>)
               }
               <li className="nav-item">
-                <NavLink to="/cart" className="nav-link">
-                  <Badge count={cart?.length} showZero offset={[10, -5]}>
+                <NavLink to="/cart" className="nav-link cartButton">
+                  <Badge className="cartButton" count={cart?.length} showZero offset={[10, -5]}>
                     Cart
                   </Badge>
                 </NavLink>
