@@ -106,7 +106,7 @@ const HomePage = () => {
         }
     };
     return (
-        <Layout title={"Clickmartio"}>
+        <Layout title={"ClickMartio"}>
         {/* banner image */}
         <img
           src="/images/banner.png"
