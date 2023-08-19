@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "./../components/layout/Layout";
 import { useSearch } from "../context/Search";
 const Search = () => {
-  const [values, setValues] = useSearch();
+  const [values] = useSearch();
   return (
     <Layout title={"Search results"}>
       <div className="container">

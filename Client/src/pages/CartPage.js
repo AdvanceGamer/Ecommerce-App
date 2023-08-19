@@ -4,12 +4,12 @@ import { useCart } from "../context/Cart";
 import { useAuth } from "../context/Auth";
 import { useNavigate } from "react-router-dom";
 import DropIn from 'braintree-web-drop-in-react';
-import { AiFillWarning } from "react-icons/ai";
+import "react-icons/ai";
 import { toast } from 'react-toastify'
 import axios from "axios";
 import "../styles/CartStyles.css";
 const CartPage = () => {
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
   const [cart, setCart] = useCart();
   const navigate = useNavigate();
   const [clientToken, setClientToken] = useState('');
@@ -19,9 +19,9 @@ const CartPage = () => {
   const totalPrice = () => {
     try {
       let total = 0;
-      cart?.map((item) => {
-        total = total + item.price;
-      });
+    cart?.forEach(element => {
+      total=total+element.price;
+    });
       return total.toLocaleString("en-US", {
         style: "currency",
         currency: "USD",
@@ -68,6 +68,9 @@ const CartPage = () => {
         nonce,
         cart,
       });
+      let p=data;
+      let s=p;
+      p=s;
       setLoading(false);
       localStorage.removeItem("cart");
       setCart([]);

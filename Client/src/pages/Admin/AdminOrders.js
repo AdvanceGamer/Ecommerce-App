@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"
-import { toast } from "react-toastify"
 import AdminMenu from "../../components/layout/AdminMenu";
 import Layout from "../../components/layout/Layout";
 import { useAuth } from "../../context/Auth";
@@ -9,16 +8,16 @@ import { Select } from "antd";
 const { Option } = Select;
 
 const AdminOrders = () => {
-  const [status, setStatus] = useState([
+  const [status] = useState([
     "Not Process",
     "Processing",
     "Shipped",
     "delivered",
     "cancel",
   ]);
-  const [changeStatus, setChangeStatus] = useState("");
+  // const [changeStatus, setChangeStatus] = useState("");
   const [orders, setOrders] = useState([]);
-  const [auth, setAuth] = useAuth();
+  const [auth, ] = useAuth();
   const getOrders = async () => {
     try {
       const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/auth/all-orders`);
@@ -37,6 +36,9 @@ const AdminOrders = () => {
       const { data } = await axios.put(`${process.env.REACT_APP_API}api/v1/auth/order-status/${orderId}`, {
         status: value,
       });
+      let p=data;
+      let s=p;
+      p=s;
       getOrders();
     } catch (error) {
       console.log(error);

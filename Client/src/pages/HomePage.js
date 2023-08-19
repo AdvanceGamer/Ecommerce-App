@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback } from "react";
 import Layout from "./../components/layout/Layout";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -36,17 +36,19 @@ const HomePage = () => {
         getTotal();
     }, []);
     //get products
-    const getAllProducts = async () => {
-        try {
-            setLoading(true);
-            const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/product/product-list/${page}`);
-            setLoading(false);
-            setProducts(data.products);
-        } catch (error) {
-            setLoading(false);
-            console.log(error);
-        }
-    };
+    const getAllProducts = useCallback(async () => {
+      try {
+        setLoading(true);
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API}api/v1/product/product-list/${page}`
+        );
+        setLoading(false);
+        setProducts(data.products);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
+    }, [page]);
 
     //getTOtal COunt
     const getTotal = async () => {
@@ -58,22 +60,26 @@ const HomePage = () => {
         }
     };
 
-    useEffect(() => {
-        if (page === 1) return;
-        loadMore();
-    }, [page]);
+ 
     //load more
-    const loadMore = async () => {
-        try {
-            setLoading(true);
-            const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/product/product-list/${page}`);
-            setLoading(false);
-            setProducts([...products, ...data?.products]);
-        } catch (error) {
-            console.log(error);
-            setLoading(false);
-        }
-    };
+    const loadMore = useCallback(async () => {
+      try {
+        setLoading(true);
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API}api/v1/product/product-list/${page}`
+        );
+        setLoading(false);
+        setProducts([...products, ...data?.products]);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    }, [page, products]);
+
+    useEffect(() => {
+      if (page === 1) return;
+      loadMore();
+    }, [page, loadMore]);
 
     // filter by cat
     const handleFilter = (value, id) => {
@@ -86,25 +92,30 @@ const HomePage = () => {
         setChecked(all);
     };
     useEffect(() => {
-        if (!checked.length || !radio.length) getAllProducts();
-    }, [checked.length, radio.length]);
-
-    useEffect(() => {
-        if (checked.length || radio.length) filterProduct();
-    }, [checked, radio]);
+      if (!checked.length || !radio.length) getAllProducts();
+    }, [checked.length, radio.length, getAllProducts]);
+ 
 
     //get filterd product
-    const filterProduct = async () => {
-        try {
-            const { data } = await axios.post(`${process.env.REACT_APP_API}api/v1/product/product-filters`, {
-                checked,
-                radio,
-            });
-            setProducts(data?.products);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    const filterProduct = useCallback(async () => {
+      try {
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_API}api/v1/product/product-filters`,
+          {
+            checked,
+            radio,
+          }
+        );
+        setProducts(data?.products);
+      } catch (error) {
+        console.log(error);
+      }
+    }, [checked, radio]);
+
+    useEffect(() => {
+      if (checked.length || radio.length) filterProduct();
+    }, [checked, radio, filterProduct]);
+
     return (
         <Layout title={"ClickMartio"}>
         {/* banner image */}

@@ -44,6 +44,7 @@ const CreateProduct = () => {
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
+      console.log(shipping);
       const productData = new FormData();
       productData.append("name", name);
       productData.append("description", description);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback } from "react";
 import Layout from "./../components/layout/Layout";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
@@ -10,11 +10,7 @@ const ProductDetails = () => {
   const [relatedProducts, setRelatedProducts] = useState([]);
 
   //initalp details
-  useEffect(() => {
-    if (params?.slug) getProduct();
-  }, [params?.slug]);
-  //getProduct
-  const getProduct = async () => {
+  const getProduct = useCallback(async () => {
     try {
       const { data } = await axios.get(
         `${process.env.REACT_APP_API}api/v1/product/get-product/${params.slug}`
@@ -24,7 +20,11 @@ const ProductDetails = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [params.slug]);
+
+  useEffect(() => {
+    if (params?.slug) getProduct();
+  }, [params?.slug, getProduct]);
   //get similar product
   const getSimilarProduct = async (pid, cid) => {
     try {

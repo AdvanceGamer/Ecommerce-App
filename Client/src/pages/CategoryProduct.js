@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useCallback} from "react";
 import Layout from "../components/layout/Layout";
 import { useParams, useNavigate } from "react-router-dom";
 import "../styles/CategoryProductStyles.css"
@@ -9,10 +9,7 @@ const CategoryProduct = () => {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState([]);
 
-  useEffect(() => {
-    if (params?.slug) getPrductsByCat();
-  }, [params?.slug]);
-  const getPrductsByCat = async () => {
+  const getPrductsByCat = useCallback(async () => {
     try {
       const { data } = await axios.get(
         `${process.env.REACT_APP_API}api/v1/product/product-category/${params.slug}`
@@ -22,7 +19,13 @@ const CategoryProduct = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [params.slug]);
+
+  useEffect(() => {
+    if (params?.slug) {
+      getPrductsByCat();
+    }
+  }, [params?.slug, getPrductsByCat]);
 
   return (
     <Layout>
